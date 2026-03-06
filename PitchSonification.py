@@ -36,9 +36,9 @@ def PitchSonification(notes, length, time_data, pitch_data,
     # selecting our parameters to map, we need to use lists which are the same length
     # as the number of notes - this is why we have four elements in the pitch array
     # and *4 for time_evo and cutoff
-    maps = {'pitch': [0], #set up base pitch with an array the same length as our data
-            'time_evo': time_data, #map time array of light curve to time in sonification
-            'pitch_shift': pitch_data} #map flux to pitch_shift
+    maps = {'pitch': np.arange(NoNotes), #set up base pitch with an array the same length as our data
+            'time_evo': [time_data]*NoNotes, #map time array of light curve to time in sonification
+            'pitch_shift': [pitch_data]*NoNotes} #map flux to pitch_shift
 
     # Here we set up our mapping limits, we want the time to go over 100% so the last note has time to play
     lims = {'time_evo': time_lims,
@@ -64,5 +64,5 @@ def PitchSonification(notes, length, time_data, pitch_data,
 
     # call score, sources, generator and audio system (channels) to combine the modules
     soni = Sonification(score, sources, generator, system)
-    
+
     return soni

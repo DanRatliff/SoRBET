@@ -34,7 +34,7 @@ def CutoffSonification(notes, length, time_data, cutoff_data,
     NoNotes = len(notes)
 
     maps = {
-        'pitch': np.linspace(0,NoNotes-1,num=NoNotes,endpoint=False),
+        'pitch': np.arange(NoNotes),
         'time_evo': [time_data]*NoNotes,
         'cutoff': [cutoff_data]*NoNotes
     }
