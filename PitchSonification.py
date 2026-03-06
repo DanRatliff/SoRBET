@@ -32,6 +32,7 @@ def PitchSonification(notes, length, time_data, pitch_data,
     """
 
     score = Score(notes, length)
+    NoNotes = len(notes)
 
     # selecting our parameters to map, we need to use lists which are the same length
     # as the number of notes - this is why we have four elements in the pitch array
