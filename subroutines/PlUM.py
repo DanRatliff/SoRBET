@@ -76,6 +76,7 @@ def PitchSonification(notes, length, time_data, pitch_data,
 
     # call score, sources, generator and audio system (channels) to combine the modules
     soni = Sonification(score, sources, generator, system)
+    soni.render()
 
     return soni
 
@@ -140,6 +141,7 @@ def CutoffSonification(notes, length, time_data, cutoff_data,
         generator.load_preset(preset)
 
     soni = Sonification(score, sources, generator, system)
+    soni.render()
 
     return soni
 
@@ -190,7 +192,7 @@ def PanSonification(notes, length, time_data, pan_data,
         'pan': pan_lims
     }
 
-    plims = {'cutoff': pan_plims}
+    plims = {}
 
     sources = Objects(maps.keys())
     sources.fromdict(maps)
@@ -203,14 +205,15 @@ def PanSonification(notes, length, time_data, pan_data,
         generator.load_preset(preset)
 
     soni = Sonification(score, sources, generator, system)
+    soni.render()
 
     return soni
 
 
 
 def PitchEventSonification(notes, length, time_data, pitch_data,
-                       time_lims=('0%', '100%'), pitch_lims=('0%', '100%'),
-                         system='mono', preset='staccato'):
+                       time_lims=('0%', '101%'), pitch_lims=('0%', '100%'),
+                         system='mono', preset='staccato',downsample = 60):
 
     score = Score(notes, length)
 
@@ -220,8 +223,6 @@ def PitchEventSonification(notes, length, time_data, pitch_data,
     maps = {'pitch': pitch_data,
           'time': time_data
           }
-    print(pitch_data.shape)
-    print(time_data.shape)
 
     # Here we set up our data limits, we want the time to go over 100% so the last note has time to play
     lims = {'time': time_lims,
@@ -240,5 +241,6 @@ def PitchEventSonification(notes, length, time_data, pitch_data,
 
     #call score, sources, generator and audio system (channels) to combine the modules
     soni = Sonification(score, sources, generator, system)
+    soni.render(downsamp=downsample)
 
     return soni

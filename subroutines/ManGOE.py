@@ -5,7 +5,7 @@ from strauss.score import Score
 
 import numpy as np
 
-def ManGOE_Object(Maps,notes,length,map_lims = None,parameter_lims = None,preset = 'pitch_mapper',system = "mono"):
+def ManGOE_Object(notes,length,Maps,map_lims = None,parameter_lims = None,preset = 'pitch_mapper',system = "mono"):
 
     """
     A consolidated STRAUSS sonification generator that generates an Object-class (i.e. continuous in time)
@@ -139,7 +139,7 @@ def ManGOE_Object(Maps,notes,length,map_lims = None,parameter_lims = None,preset
     return soni
 
 
-def ManGOE_Event(Maps,notes,length,map_lims = None,parameter_lims = None,preset = 'pitch_mapper',system = "mono",downsample=60):
+def ManGOE_Event(notes,length,Maps,map_lims = None,parameter_lims = None,preset = 'pitch_mapper',system = "mono",downsample=60):
  
     """
     A consolidated STRAUSS sonification generator that generates an Events-class (i.e. discrete in time)
