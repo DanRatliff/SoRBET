@@ -3,6 +3,7 @@ __pycache__/
 .ipynb_checkpoints/
 *.cdf
 *.wav
+!samples/*.wav #Keeps samples
 *.mp3
 .DS_Store
 sorbet_env/
