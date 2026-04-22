@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+*.cdf
+*.wav
+*.mp3
+.DS_Store
+sorbet_env/
+.venv/
+*.egg-info/
+dist/
+build/
