@@ -11,3 +11,4 @@ sorbet_env/
 *.egg-info/
 dist/
 build/
+*tests.ipynb
