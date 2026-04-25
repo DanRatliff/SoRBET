@@ -1,0 +1,4 @@
+strauss
+numpy
+matplotlib
+cdflib

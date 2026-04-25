@@ -1,0 +1,668 @@
+{
+    "_meta": {
+        "version": "0.2.0",
+        "name": "FReESR — Fetch Registry to Explore Space Repositories",
+        "description": "SoRBET data registry. Maps friendly spacecraft/quantity names to archive-specific dataset IDs, URL patterns, variable names, and access details. URL templates use {year}, {month}, {date} (YYYYMMDD) and {date_dashed} (YYYY-MM-DD) placeholders.",
+        "sources": {
+            "cdaweb": "https://cdaweb.gsfc.nasa.gov/WS/cdasr/1/dataviews/sp_phys",
+            "spdf": "https://spdf.gsfc.nasa.gov/pub/data",
+            "ncei": "https://data.ngdc.noaa.gov/platforms/solar-space-observing-satellites/goes",
+            "erg": "https://ergsc.isee.nagoya-u.ac.jp"
+        },
+        "file_formats": {
+            "cdf": "Use cdflib to read",
+            "netcdf": "Use netCDF4 or xarray to read"
+        },
+        "url_template_keys": {
+            "year": "4-digit year string, e.g. 2015",
+            "month": "2-digit zero-padded month string, e.g. 03",
+            "date": "8-digit date string YYYYMMDD, e.g. 20150317",
+            "date_dashed": "Dashed date string YYYY-MM-DD, e.g. 2015-03-17"
+        }
+    },
+
+    "rbsp-a": {
+        "_info": {
+            "name": "Van Allen Probe A (RBSP-A)",
+            "orbit": "Highly elliptical, ~600 km to ~30,600 km, ~9 hr period",
+            "operating": "2012-10-01 to 2019-10-18",
+            "archive": "cdaweb"
+        },
+        "density": {
+            "dataset": "RBSPA_EMFISIS-L4_DENSITY",
+            "url_base": "https://cdaweb.gsfc.nasa.gov/pub/data/rbsp/rbspa/l4/emfisis/density/{year}/",
+            "filename_pattern": "rbsp-a_density_emfisis-l4_{date}",
+            "variables": {
+                "data": "density",
+                "time": "Epoch",
+                "support": ["bmag"]
+            },
+            "epoch_type": "CDF_TT2000",
+            "file_format": "cdf",
+            "description": "Electron number density inferred from upper hybrid resonance frequency"
+        },
+        "magnetic field": {
+            "dataset": "RBSPA_EMFISIS-L4_DENSITY",
+            "url_base": "https://cdaweb.gsfc.nasa.gov/pub/data/rbsp/rbspa/l4/emfisis/density/{year}/",
+            "filename_pattern": "rbsp-a_density_emfisis-l4_{date}",
+            "variables": {
+                "data": "bmag",
+                "time": "Epoch"
+            },
+            "epoch_type": "CDF_TT2000",
+            "file_format": "cdf",
+            "description": "Magnetic field magnitude from EMFISIS (same file as density)"
+        },
+        "electron flux": {
+            "dataset": "RBSPA_REL04_ECT-MAGEIS-L3",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/rbsp/rbspa/l3/ect/mageis/sectors/rel04/{year}/",
+            "filename_pattern": "rbspa_rel04_ect-mageis-l3_{date}",
+            "variables": {
+                "data": "FESA",
+                "time": "Epoch",
+                "support": ["FESA_Energy", "FEDU", "FEDU_Energy"]
+            },
+            "epoch_type": "CDF_TT2000",
+            "file_format": "cdf",
+            "description": "Spin-averaged electron flux from MagEIS, 25 energy channels (~20 keV to ~4 MeV). FESA shape is (ntime, 25). Fill value is -1e31."
+        },
+        "l-shell": {
+            "dataset": "RBSPA_REL04_ECT-MAGEIS-L3",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/rbsp/rbspa/l3/ect/mageis/sectors/rel04/{year}/",
+            "filename_pattern": "rbspa_rel04_ect-mageis-l3_{date}",
+            "variables": {
+                "data": "L",
+                "time": "Epoch",
+                "support": ["L_star"]
+            },
+            "epoch_type": "CDF_TT2000",
+            "file_format": "cdf",
+            "description": "McIlwain L parameter (dipole L-shell). Bundled with ECT flux data. L_star is Roederer L*."
+        },
+        "mlt": {
+            "dataset": "RBSPA_REL04_ECT-MAGEIS-L3",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/rbsp/rbspa/l3/ect/mageis/sectors/rel04/{year}/",
+            "filename_pattern": "rbspa_rel04_ect-mageis-l3_{date}",
+            "variables": {
+                "data": "MLT",
+                "time": "Epoch"
+            },
+            "epoch_type": "CDF_TT2000",
+            "file_format": "cdf",
+            "description": "Magnetic Local Time in hours (0-24). Bundled with ECT flux data."
+        }
+    },
+
+    "rbsp-b": {
+        "_info": {
+            "name": "Van Allen Probe B (RBSP-B)",
+            "orbit": "Highly elliptical, ~600 km to ~30,600 km, ~9 hr period",
+            "operating": "2012-10-01 to 2019-07-16",
+            "archive": "cdaweb"
+        },
+        "density": {
+            "dataset": "RBSPB_EMFISIS-L4_DENSITY",
+            "url_base": "https://cdaweb.gsfc.nasa.gov/pub/data/rbsp/rbspb/l4/emfisis/density/{year}/",
+            "filename_pattern": "rbsp-b_density_emfisis-l4_{date}",
+            "variables": {
+                "data": "density",
+                "time": "Epoch",
+                "support": ["bmag"]
+            },
+            "epoch_type": "CDF_TT2000",
+            "file_format": "cdf",
+            "description": "Electron number density inferred from upper hybrid resonance frequency"
+        },
+        "magnetic field": {
+            "dataset": "RBSPB_EMFISIS-L4_DENSITY",
+            "url_base": "https://cdaweb.gsfc.nasa.gov/pub/data/rbsp/rbspb/l4/emfisis/density/{year}/",
+            "filename_pattern": "rbsp-b_density_emfisis-l4_{date}",
+            "variables": {
+                "data": "bmag",
+                "time": "Epoch"
+            },
+            "epoch_type": "CDF_TT2000",
+            "file_format": "cdf",
+            "description": "Magnetic field magnitude from EMFISIS (same file as density)"
+        },
+        "electron flux": {
+            "dataset": "RBSPB_REL04_ECT-MAGEIS-L3",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/rbsp/rbspb/l3/ect/mageis/sectors/rel04/{year}/",
+            "filename_pattern": "rbspb_rel04_ect-mageis-l3_{date}",
+            "variables": {
+                "data": "FESA",
+                "time": "Epoch",
+                "support": ["FESA_Energy", "FEDU", "FEDU_Energy"]
+            },
+            "epoch_type": "CDF_TT2000",
+            "file_format": "cdf",
+            "description": "Spin-averaged electron flux from MagEIS, 25 energy channels (~20 keV to ~4 MeV)"
+        },
+        "l-shell": {
+            "dataset": "RBSPB_REL04_ECT-MAGEIS-L3",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/rbsp/rbspb/l3/ect/mageis/sectors/rel04/{year}/",
+            "filename_pattern": "rbspb_rel04_ect-mageis-l3_{date}",
+            "variables": {
+                "data": "L",
+                "time": "Epoch",
+                "support": ["L_star"]
+            },
+            "epoch_type": "CDF_TT2000",
+            "file_format": "cdf",
+            "description": "McIlwain L parameter (dipole L-shell)"
+        },
+        "mlt": {
+            "dataset": "RBSPB_REL04_ECT-MAGEIS-L3",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/rbsp/rbspb/l3/ect/mageis/sectors/rel04/{year}/",
+            "filename_pattern": "rbspb_rel04_ect-mageis-l3_{date}",
+            "variables": {
+                "data": "MLT",
+                "time": "Epoch"
+            },
+            "epoch_type": "CDF_TT2000",
+            "file_format": "cdf",
+            "description": "Magnetic Local Time in hours (0-24)"
+        }
+    },
+
+    "ace": {
+        "_info": {
+            "name": "Advanced Composition Explorer (ACE)",
+            "orbit": "L1 Lagrange point, ~1.5 million km sunward of Earth",
+            "operating": "1997-08-25 to present",
+            "archive": "cdaweb"
+        },
+        "magnetic field": {
+            "dataset": "AC_H0_MFI",
+            "url_base": "https://cdaweb.gsfc.nasa.gov/pub/data/ace/mag/level_2_cdaweb/mfi_h0/{year}/",
+            "filename_pattern": "ac_h0_mfi_{date}",
+            "variables": {
+                "data": "Magnitude",
+                "time": "Epoch",
+                "support": ["BGSEc"]
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "Magnetic field magnitude and GSE components (BGSEc is [Bx,By,Bz]) from MAG/MFI instrument. 16-second resolution."
+        },
+        "solar wind speed": {
+            "dataset": "AC_H0_SWE",
+            "url_base": "https://cdaweb.gsfc.nasa.gov/pub/data/ace/swepam/level_2_cdaweb/swe_h0/{year}/",
+            "filename_pattern": "ac_h0_swe_{date}",
+            "variables": {
+                "data": "Vp",
+                "time": "Epoch"
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "Solar wind proton bulk speed (km/s) from SWEPAM. 64-second resolution."
+        },
+        "solar wind density": {
+            "dataset": "AC_H0_SWE",
+            "url_base": "https://cdaweb.gsfc.nasa.gov/pub/data/ace/swepam/level_2_cdaweb/swe_h0/{year}/",
+            "filename_pattern": "ac_h0_swe_{date}",
+            "variables": {
+                "data": "Np",
+                "time": "Epoch"
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "Solar wind proton number density (cm^-3) from SWEPAM"
+        },
+        "solar wind temperature": {
+            "dataset": "AC_H0_SWE",
+            "url_base": "https://cdaweb.gsfc.nasa.gov/pub/data/ace/swepam/level_2_cdaweb/swe_h0/{year}/",
+            "filename_pattern": "ac_h0_swe_{date}",
+            "variables": {
+                "data": "Tpr",
+                "time": "Epoch"
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "Solar wind proton temperature (K) from SWEPAM"
+        }
+    },
+
+    "themis-a": {
+        "_info": {
+            "name": "THEMIS-A (P5)",
+            "orbit": "Near-Earth equatorial, varies with mission phase",
+            "operating": "2007-02-17 to present",
+            "archive": "cdaweb"
+        },
+        "magnetic field": {
+            "dataset": "THA_L2_FGM",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/themis/tha/l2/fgm/{year}/",
+            "filename_pattern": "tha_l2_fgm_{date}",
+            "variables": {
+                "data": "tha_fgs_gse",
+                "time": "tha_fgs_epoch"
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "Fluxgate magnetometer spin-fit data in GSE coordinates. Vector [Bx,By,Bz]; compute magnitude as needed."
+        },
+        "density": {
+            "dataset": "THA_L2_MOM",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/themis/tha/l2/mom/{year}/",
+            "filename_pattern": "tha_l2_mom_{date}",
+            "variables": {
+                "data": "tha_peim_density",
+                "time": "tha_peim_epoch"
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "Ion density from on-board ESA moments"
+        },
+        "electron flux": {
+            "dataset": "THA_L2_SST",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/themis/tha/l2/sst/{year}/",
+            "filename_pattern": "tha_l2_sst_{date}",
+            "variables": {
+                "data": "tha_psif_en_eflux",
+                "time": "tha_psif_epoch"
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "SST ion energy flux spectrogram (30-300 keV). For electron SST flux, use tha_psef_en_eflux."
+        }
+    },
+
+    "themis-d": {
+        "_info": {
+            "name": "THEMIS-D (P3)",
+            "orbit": "Near-Earth equatorial, varies with mission phase",
+            "operating": "2007-02-17 to present",
+            "archive": "cdaweb"
+        },
+        "magnetic field": {
+            "dataset": "THD_L2_FGM",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/themis/thd/l2/fgm/{year}/",
+            "filename_pattern": "thd_l2_fgm_{date}",
+            "variables": {
+                "data": "thd_fgs_gse",
+                "time": "thd_fgs_epoch"
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "Fluxgate magnetometer spin-fit data in GSE coordinates"
+        },
+        "density": {
+            "dataset": "THD_L2_MOM",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/themis/thd/l2/mom/{year}/",
+            "filename_pattern": "thd_l2_mom_{date}",
+            "variables": {
+                "data": "thd_peim_density",
+                "time": "thd_peim_epoch"
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "Ion density from on-board ESA moments"
+        }
+    },
+
+    "themis-e": {
+        "_info": {
+            "name": "THEMIS-E (P4)",
+            "orbit": "Near-Earth equatorial, varies with mission phase",
+            "operating": "2007-02-17 to present",
+            "archive": "cdaweb"
+        },
+        "magnetic field": {
+            "dataset": "THE_L2_FGM",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/themis/the/l2/fgm/{year}/",
+            "filename_pattern": "the_l2_fgm_{date}",
+            "variables": {
+                "data": "the_fgs_gse",
+                "time": "the_fgs_epoch"
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "Fluxgate magnetometer spin-fit data in GSE coordinates"
+        },
+        "density": {
+            "dataset": "THE_L2_MOM",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/themis/the/l2/mom/{year}/",
+            "filename_pattern": "the_l2_mom_{date}",
+            "variables": {
+                "data": "the_peim_density",
+                "time": "the_peim_epoch"
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "Ion density from on-board ESA moments"
+        }
+    },
+
+    "cluster-1": {
+        "_info": {
+            "name": "Cluster-1 (Rumba)",
+            "orbit": "Polar, 4 RE x 19.6 RE, ~57 hr period",
+            "operating": "2000-08-01 to present",
+            "archive": "cdaweb"
+        },
+        "density": {
+            "dataset": "C1_PP_WHI",
+            "url_base": "https://cdaweb.gsfc.nasa.gov/pub/data/cluster/c1/pp/whi/{year}/",
+            "filename_pattern": "c1_pp_whi_{date}",
+            "variables": {
+                "data": "N_e_res__C1_PP_WHI",
+                "time": "Epoch__C1_PP_WHI"
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "Electron density from WHISPER resonance sounding, prime parameters (~4 min resolution)"
+        },
+        "magnetic field": {
+            "dataset": "C1_CP_FGM_SPIN",
+            "url_base": "https://cdaweb.gsfc.nasa.gov/pub/data/cluster/c1/cp/fgm/{year}/",
+            "filename_pattern": "c1_cp_fgm_spin__{date}",
+            "variables": {
+                "data": "B_mag__C1_CP_FGM_SPIN",
+                "time": "time_tags__C1_CP_FGM_SPIN"
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "Magnetic field magnitude from FGM at spin resolution (~4 s). Full vector available as B_vec_xyz_gse__C1_CP_FGM_SPIN."
+        }
+    },
+
+    "cluster-3": {
+        "_info": {
+            "name": "Cluster-3 (Samba)",
+            "orbit": "Polar, 4 RE x 19.6 RE, ~57 hr period",
+            "operating": "2000-08-01 to present",
+            "archive": "cdaweb"
+        },
+        "density": {
+            "dataset": "C3_PP_WHI",
+            "url_base": "https://cdaweb.gsfc.nasa.gov/pub/data/cluster/c3/pp/whi/{year}/",
+            "filename_pattern": "c3_pp_whi_{date}",
+            "variables": {
+                "data": "N_e_res__C3_PP_WHI",
+                "time": "Epoch__C3_PP_WHI"
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "Electron density from WHISPER resonance sounding"
+        },
+        "magnetic field": {
+            "dataset": "C3_CP_FGM_SPIN",
+            "url_base": "https://cdaweb.gsfc.nasa.gov/pub/data/cluster/c3/cp/fgm/{year}/",
+            "filename_pattern": "c3_cp_fgm_spin__{date}",
+            "variables": {
+                "data": "B_mag__C3_CP_FGM_SPIN",
+                "time": "time_tags__C3_CP_FGM_SPIN"
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "Magnetic field magnitude from FGM at spin resolution"
+        }
+    },
+
+    "arase": {
+        "_info": {
+            "name": "Arase (ERG)",
+            "orbit": "Highly elliptical, ~400 km to ~32,000 km, ~570 min period",
+            "operating": "2017-01-15 to present",
+            "archive": "erg",
+            "archive_note": "Primary data from ERG Science Center (ergsc.isee.nagoya-u.ac.jp). Some datasets mirrored on CDAWeb with ERG_ prefix. URL patterns below are for the ERG Science Center; CDAWeb mirrors may use different paths."
+        },
+        "density": {
+            "dataset": "ERG_PWE_HFA_L3_1MIN",
+            "url_base": "https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/satellite/erg/pwe/hfa/l3/1min/{year}/{month}/",
+            "filename_pattern": "erg_pwe_hfa_l3_1min_{date}",
+            "variables": {
+                "data": "ne_mgf",
+                "time": "epoch"
+            },
+            "epoch_type": "CDF_TT2000",
+            "file_format": "cdf",
+            "cdaweb_fallback": true,
+            "description": "Electron density derived from upper hybrid resonance frequency (PWE/HFA L3, 1-min averages)"
+        },
+        "magnetic field": {
+            "dataset": "ERG_MGF_L2_8SEC",
+            "url_base": "https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/satellite/erg/mgf/l2/8sec/{year}/{month}/",
+            "filename_pattern": "erg_mgf_l2_8sec_{date}",
+            "variables": {
+                "data": "mag_8sec_sm",
+                "time": "epoch_8sec"
+            },
+            "epoch_type": "CDF_TT2000",
+            "file_format": "cdf",
+            "cdaweb_fallback": true,
+            "description": "8-second averaged magnetic field vector in SM coordinates from MGF. Compute magnitude as needed."
+        },
+        "electron flux": {
+            "dataset": "ERG_MEPE_L2_OMNIFLUX",
+            "url_base": "https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/satellite/erg/mepe/l2/omniflux/{year}/{month}/",
+            "filename_pattern": "erg_mepe_l2_omniflux_{date}",
+            "variables": {
+                "data": "FEDO",
+                "time": "Epoch"
+            },
+            "epoch_type": "CDF_TT2000",
+            "file_format": "cdf",
+            "cdaweb_fallback": true,
+            "description": "Omnidirectional electron flux from MEP-e (~10 keV to ~100 keV). For higher energies use HEP (ERG_HEP_L2_OMNIFLUX)."
+        }
+    },
+
+    "goes-16": {
+        "_info": {
+            "name": "GOES-16 (GOES East)",
+            "orbit": "Geosynchronous, 75.2 W longitude, L ~ 6.6",
+            "operating": "2016-11-19 to present",
+            "archive": "ncei",
+            "archive_note": "GOES-R series particle data is on NCEI in netCDF format. MAG L2 is also on CDAWeb as DN_MAGN-L2-HIRES_G16. NCEI filenames may include version suffixes; use find_cdf_file pattern matching (works on .nc too)."
+        },
+        "magnetic field": {
+            "dataset": "DN_MAGN-L2-HIRES_G16",
+            "url_base": "https://data.ngdc.noaa.gov/platforms/solar-space-observing-satellites/goes/goes16/l2/data/magn-l2-hires/{year}/{month}/",
+            "filename_pattern": "dn_magn-l2-hires_g16_d{date}",
+            "variables": {
+                "data": "b_total",
+                "time": "time",
+                "support": ["b_epn"]
+            },
+            "epoch_type": "netcdf_datetime64",
+            "file_format": "netcdf",
+            "cdaweb_fallback": true,
+            "description": "Magnetic field at geosynchronous orbit, 10 Hz (L2 hires). b_total is scalar magnitude, b_epn is [earthward, poleward, normal] vector."
+        },
+        "electron flux": {
+            "dataset": "GOES16_SEISS_MPSH_L2_AVG1M",
+            "url_base": "https://data.ngdc.noaa.gov/platforms/solar-space-observing-satellites/goes/goes16/l2/data/seiss-l2-mpsh-avg1m/{year}/{month}/",
+            "filename_pattern": "sci_seiss-l2-mpsh-avg1m_g16_d{date}",
+            "variables": {
+                "data": "AvgDiffElectronFlux",
+                "time": "time",
+                "support": ["ElectronEffectiveEnergy"]
+            },
+            "epoch_type": "netcdf_datetime64",
+            "file_format": "netcdf",
+            "description": "1-minute averaged electron flux from SEISS MPS-HI, 10 differential channels (50 keV to 4 MeV) plus >2 MeV integral. Channels E1 (50-80 keV) and E2 (80-140 keV) are most responsive to substorm injections."
+        }
+    },
+
+    "goes-18": {
+        "_info": {
+            "name": "GOES-18 (GOES West)",
+            "orbit": "Geosynchronous, 137.2 W longitude, L ~ 6.6",
+            "operating": "2022-03-01 to present",
+            "archive": "ncei",
+            "archive_note": "Same data structure as GOES-16. MAG L2 also on CDAWeb as DN_MAGN-L2-HIRES_G18."
+        },
+        "magnetic field": {
+            "dataset": "DN_MAGN-L2-HIRES_G18",
+            "url_base": "https://data.ngdc.noaa.gov/platforms/solar-space-observing-satellites/goes/goes18/l2/data/magn-l2-hires/{year}/{month}/",
+            "filename_pattern": "dn_magn-l2-hires_g18_d{date}",
+            "variables": {
+                "data": "b_total",
+                "time": "time",
+                "support": ["b_epn"]
+            },
+            "epoch_type": "netcdf_datetime64",
+            "file_format": "netcdf",
+            "cdaweb_fallback": true,
+            "description": "Magnetic field at geosynchronous orbit, 10 Hz (L2 hires)"
+        },
+        "electron flux": {
+            "dataset": "GOES18_SEISS_MPSH_L2_AVG1M",
+            "url_base": "https://data.ngdc.noaa.gov/platforms/solar-space-observing-satellites/goes/goes18/l2/data/seiss-l2-mpsh-avg1m/{year}/{month}/",
+            "filename_pattern": "sci_seiss-l2-mpsh-avg1m_g18_d{date}",
+            "variables": {
+                "data": "AvgDiffElectronFlux",
+                "time": "time",
+                "support": ["ElectronEffectiveEnergy"]
+            },
+            "epoch_type": "netcdf_datetime64",
+            "file_format": "netcdf",
+            "description": "1-minute averaged electron flux from SEISS MPS-HI"
+        }
+    },
+
+    "omni": {
+        "_info": {
+            "name": "OMNI (multi-source solar wind and indices)",
+            "orbit": "N/A - propagated to Earth bow shock nose from L1 spacecraft",
+            "operating": "1963-01-01 to present",
+            "archive": "cdaweb",
+            "archive_note": "OMNI high-res files are daily. OMNI hourly files (for Dst, Kp) are yearly — the filename_pattern uses {year}0101 as a convention; the loader should download once per year, not per day."
+        },
+        "magnetic field": {
+            "dataset": "OMNI_HRO2_1MIN",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/omni/omni_cdaweb/hro2_1min/{year}/",
+            "filename_pattern": "omni_hro2_1min_{date}",
+            "variables": {
+                "data": "F",
+                "time": "Epoch",
+                "support": ["BX_GSE", "BY_GSE", "BZ_GSE"]
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "IMF magnitude and GSE components, 1-min resolution, time-shifted to bow shock nose"
+        },
+        "solar wind speed": {
+            "dataset": "OMNI_HRO2_1MIN",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/omni/omni_cdaweb/hro2_1min/{year}/",
+            "filename_pattern": "omni_hro2_1min_{date}",
+            "variables": {
+                "data": "flow_speed",
+                "time": "Epoch"
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "Solar wind bulk flow speed (km/s), 1-min resolution"
+        },
+        "solar wind density": {
+            "dataset": "OMNI_HRO2_1MIN",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/omni/omni_cdaweb/hro2_1min/{year}/",
+            "filename_pattern": "omni_hro2_1min_{date}",
+            "variables": {
+                "data": "proton_density",
+                "time": "Epoch"
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "Solar wind proton density (cm^-3), 1-min resolution"
+        },
+        "dst": {
+            "dataset": "OMNI2_H0_MRG1HR",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/omni/omni_cdaweb/hourly/{year}/",
+            "filename_pattern": "omni2_h0_mrg1hr_{year}0101",
+            "cadence": "yearly",
+            "variables": {
+                "data": "DST1800",
+                "time": "Epoch"
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "Disturbance Storm Time index (nT), hourly resolution. Measures ring current intensity; large negative values indicate geomagnetic storms."
+        },
+        "sym-h": {
+            "dataset": "OMNI_HRO2_1MIN",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/omni/omni_cdaweb/hro2_1min/{year}/",
+            "filename_pattern": "omni_hro2_1min_{date}",
+            "variables": {
+                "data": "SYM_H",
+                "time": "Epoch"
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "SYM-H index (nT), 1-min resolution. High-cadence version of Dst; tracks ring current intensity in near real-time."
+        },
+        "kp": {
+            "dataset": "OMNI2_H0_MRG1HR",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/omni/omni_cdaweb/hourly/{year}/",
+            "filename_pattern": "omni2_h0_mrg1hr_{year}0101",
+            "cadence": "yearly",
+            "variables": {
+                "data": "KP1800",
+                "time": "Epoch"
+            },
+            "epoch_type": "CDF_EPOCH",
+            "file_format": "cdf",
+            "description": "Kp geomagnetic activity index (0-9), 3-hourly but stored with hourly timestamps"
+        }
+    },
+
+    "dscovr": {
+        "_info": {
+            "name": "Deep Space Climate Observatory (DSCOVR)",
+            "orbit": "L1 Lagrange point (replaced ACE as primary real-time solar wind monitor)",
+            "operating": "2015-06-08 to present",
+            "archive": "cdaweb"
+        },
+        "magnetic field": {
+            "dataset": "DSCOVR_H0_MAG",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/dscovr/h0/mag/{year}/",
+            "filename_pattern": "dscovr_h0_mag_{date}",
+            "variables": {
+                "data": "B1F1",
+                "time": "Epoch1",
+                "support": ["B1GSE"]
+            },
+            "epoch_type": "CDF_TT2000",
+            "file_format": "cdf",
+            "description": "Magnetic field magnitude and GSE vector from fluxgate magnetometer, 1-second definitive data"
+        },
+        "solar wind speed": {
+            "dataset": "DSCOVR_H1_FC",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/dscovr/h1/faraday_cup/{year}/",
+            "filename_pattern": "dscovr_h1_fc_{date}",
+            "variables": {
+                "data": "V_GSE",
+                "time": "Epoch"
+            },
+            "epoch_type": "CDF_TT2000",
+            "file_format": "cdf",
+            "description": "Solar wind velocity vector in GSE from Faraday Cup. Compute speed as magnitude of vector."
+        },
+        "solar wind density": {
+            "dataset": "DSCOVR_H1_FC",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/dscovr/h1/faraday_cup/{year}/",
+            "filename_pattern": "dscovr_h1_fc_{date}",
+            "variables": {
+                "data": "Np",
+                "time": "Epoch"
+            },
+            "epoch_type": "CDF_TT2000",
+            "file_format": "cdf",
+            "description": "Solar wind proton density (cm^-3) from Faraday Cup"
+        },
+        "solar wind temperature": {
+            "dataset": "DSCOVR_H1_FC",
+            "url_base": "https://spdf.gsfc.nasa.gov/pub/data/dscovr/h1/faraday_cup/{year}/",
+            "filename_pattern": "dscovr_h1_fc_{date}",
+            "variables": {
+                "data": "THERMAL_SPD",
+                "time": "Epoch"
+            },
+            "epoch_type": "CDF_TT2000",
+            "file_format": "cdf",
+            "description": "Solar wind proton thermal speed (km/s). Convert to temperature via T = (m_p * v_th^2) / (2 * k_B)."
+        }
+    }
+}
