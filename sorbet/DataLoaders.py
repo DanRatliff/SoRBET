@@ -6,10 +6,7 @@ import urllib.request
 from pathlib import Path
 import os
 
-try:
-    _registry_path = Path(__file__).parent / 'FReESR.json'
-except NameError:
-    _registry_path = Path(os.getcwd()) / 'FReESR.json'
+_registry_path = Path(__file__).parent / 'FReESR.json'
 
 with open(_registry_path) as f:
     REGISTRY = json.load(f)
