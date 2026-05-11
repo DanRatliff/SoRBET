@@ -4,3 +4,4 @@ from .PLUM import *
 from .SLOE import *
 from .DataLoaders import *
 from .cutlery import *
+from .Mixer import *
