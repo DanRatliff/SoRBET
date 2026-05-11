@@ -7,8 +7,8 @@ import numpy as np
 import os
 import warnings
 
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SAMPLES_PATH = os.path.join(PROJECT_ROOT, 'Samples', 'mallets')
+from pathlib import Path
+SAMPLES_PATH = str(Path(__file__).parent / 'Samples' / 'mallets')
 
 def PitchSonification(notes, length, time_data, pitch_data,
                        time_lims=('0%', '100%'), pitch_lims=('0%', '100%'),

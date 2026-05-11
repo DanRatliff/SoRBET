@@ -9,7 +9,7 @@ setup(
     url="https://github.com/DanRatliff/SoRBET",
     packages=find_packages(),
     package_data={
-        "sorbet": ["*.json"],   # ship JSON files inside the sorbet package
+        'sorbet': ['FReESR.json', 'Samples/**/*.wav', 'Samples/**/*.sf2'],
     },
     include_package_data=True,
     install_requires=[
