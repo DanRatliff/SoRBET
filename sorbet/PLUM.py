@@ -181,9 +181,6 @@ def PanSonification(notes, length, time_data, pan_data,
     score = Score(notes, length)
     NoNotes = len(notes[0])
 
-    #We add a function here
-    #time_data, pan_data = _DensifyPanData(time_data,pan_data,length)
-
     maps = {
         'pitch': list(range(NoNotes)),
         'time_evo': [time_data]*NoNotes,
