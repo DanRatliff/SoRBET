@@ -182,7 +182,7 @@ def PanSonification(notes, length, time_data, pan_data,
     NoNotes = len(notes[0])
 
     #We add a function here
-    time_data, pan_data = _DensifyPanData(time_data,pan_data,length)
+    #time_data, pan_data = _DensifyPanData(time_data,pan_data,length)
 
     maps = {
         'pitch': list(range(NoNotes)),
