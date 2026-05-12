@@ -1,4 +1,4 @@
-time (hours),Bz,B magnitude,Solar Wind Speed (km/s),proton density
+time,Bz,B magnitude,solar wind speed,proton density
 0.000000,0.726000,2.066000,454.690002,2.841000
 0.016667,0.099750,1.721000,454.944379,2.845972
 0.033333,-0.087000,1.538000,456.047817,2.775556

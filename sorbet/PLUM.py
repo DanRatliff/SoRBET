@@ -213,7 +213,7 @@ def PanSonification(notes, length, time_data, pan_data,
 
 
 def PitchEventSonification(notes, length, time_data, pitch_data,
-                       time_lims=('0%', '101%'), pitch_lims=('0%', '100%'),
+                       time_lims=('0%', '101%'), pitch_lims=None,
                          system='mono', preset='staccato',downsample = 60):
 
     score = Score(notes, length)
@@ -224,6 +224,12 @@ def PitchEventSonification(notes, length, time_data, pitch_data,
     maps = {'pitch': pitch_data,
           'time': time_data
           }
+    
+    # If pitch_lims isn't given, we derive absolute numerical bounds from
+    # the full data given so the pitch mapping is consistent across the run
+    # rather than rescaled per-source/per-window by STRAUSS - which is weird but hey.
+    if pitch_lims is None:
+        pitch_lims = (pitch_data.min(), pitch_data.max())
 
     # Here we set up our data limits, we want the time to go over 100% so the last note has time to play
     lims = {'time': time_lims,
