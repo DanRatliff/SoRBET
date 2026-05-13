@@ -213,7 +213,7 @@ def PanSonification(notes, length, time_data, pan_data,
 
 
 def PitchEventSonification(notes, length, time_data, pitch_data,
-                       time_lims=('0%', '101%'), pitch_lims=None,
+                       time_lims=('0%', '101%'), pitch_lims=('0%','100%'),
                          system='mono', preset='staccato',downsample = 60):
 
     score = Score(notes, length)
