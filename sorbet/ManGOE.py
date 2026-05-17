@@ -146,6 +146,13 @@ def ManGOE_Object(notes,length,Maps,map_lims = None,parameter_lims = None,preset
     if 'cutoff' in active_maps:
         generator.modify_preset({'filter': 'on'})
 
+    # Same trick for the LFOs, namely if a tremelo or vibrato is present, turn the generators on
+    if any(k.startswith('volume_lfo') for k in active_maps):
+    generator.modify_preset({'volume_lfo': {'use': 'on'}})
+    
+    if any(k.startswith('pitch_lfo') for k in active_maps):
+    generator.modify_preset({'pitch_lfo': {'use': 'on'}})
+
     #5) We may now build and render the sonification - yippee! Hooray!
     soni = Sonification(score, sources, generator, system)
     soni.render()
