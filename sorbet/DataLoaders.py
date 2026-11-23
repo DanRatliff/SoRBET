@@ -185,7 +185,7 @@ def fetch(craft, data, start, end, path='./data'):
     # in the eyes of FReESR
     unknown = data - {k for k in quantities if not k.startswith('_')}
 
-    # Now flag an eror is unknown contains any elements/is not None
+    # Now flag an error is unknown contains any elements/is not None
     if unknown:
         raise ValueError(
             f"Unknown quantities for {craft}: {unknown}. "
@@ -220,6 +220,14 @@ def fetch(craft, data, start, end, path='./data'):
 
     #The main loading loop - given the date/day, it loads the data associated with that day
 
+    # There are multiple files with different cadences. In order to make sure we don't load a dataset,
+    #  redownload the same set and then stack on multiples of the same dats, we do the following check 
+    # to see if we've already fetched the data requested. Thus keep a check on files that have been 
+    # resolved. This replaces the yearly check that used to exist in fetch, because OMNI is a 
+    # monkey wrench and does half years - WHO DOES THAT!?
+
+    _files_done = set()
+
     # Loop over dates
     while current <= end_dt:
 
@@ -228,55 +236,29 @@ def fetch(craft, data, start, end, path='./data'):
         date_str = current.strftime('%Y%m%d')
         year = current.strftime('%Y')
         month = current.strftime('%m')
-        
+
         # Loop over data requested
         for dataset_id, quantity_names in datasets_needed.items():
             # Get the registry entry (use first quantity's entry — they share the dataset)
             entry = quantities[quantity_names[0]]
+            base_url, file_pattern = _resolve_url(entry, date_str, year, month)
             
-            # Skip if yearly cadence and we've already downloaded for this year
-            if entry.get('cadence') == 'yearly':
-                yearly_key = (dataset_id, year)
+#        Monthly/half-yearly files cover many days, so only grab each once
+            if (dataset_id, file_pattern) in _files_done:
+                continue
 
-                # If we've grabbed the file already
-                if yearly_key in _yearly_done:
-                    for name in quantity_names:
-                        results[name].append(_yearly_done[yearly_key])
-                    continue
-            
             try:
-                #Use given date, month and year to populate generic url and file pattern
-                base_url, file_pattern = _resolve_url(entry, date_str, year, month)
-
-                # We download the required CDf file
                 cdf_filename = find_cdf_file(base_url, file_pattern)
-                
-                # We put together the local path of where we'll save the data
                 local_file = Path(path) / cdf_filename
-
-                #if the data directory doesn't exist, we'll make it
                 local_file.parent.mkdir(parents=True, exist_ok=True)
-                
-                # Grab the cdf file based on the cdf filename generated above, 
-                # if we don't already have it downloaded
                 if not local_file.exists():
-                    urllib.request.urlretrieve(
-                        base_url + cdf_filename, str(local_file)
-                    )
-                
-                # Now add the extracted data file name to the results dictionary for 
-                # each requested data stream
+                    urllib.request.urlretrieve(base_url + cdf_filename, str(local_file))
+
                 for name in quantity_names:
                     results[name].append(str(local_file))
-                
-                # Remember yearly files so we don't re-download
-                if entry.get('cadence') == 'yearly':
-                    _yearly_done[(dataset_id, year)] = str(local_file)
-                
-                # Keep user updated on how much we've done and whether the load was successful
+                _files_done.add((dataset_id, file_pattern))
                 print(f"Loaded {dataset_id} for {date_str}")
 
-            # If we can't find the file, skip it - but let user know     
             except FileNotFoundError as e:
                 print(f"Skipping {dataset_id} on {date_str}: {e}")
         
@@ -290,7 +272,7 @@ def fetch(craft, data, start, end, path='./data'):
 
 
 
-def load(craft, data, files):
+def load(craft, data, files,start = None,end=None):
     """
     Load and concatenate data from the downloaded cdf/nc files obtained by fetch.
     
@@ -304,6 +286,12 @@ def load(craft, data, files):
 
     files (dict):
         Output from fetch() — maps quantity names to lists of local file paths
+
+    start (str): optional
+        YYY-MM-DD formatted starting instance, used if you want to trim longer datasets to the interval you want
+    
+    end (str): optional
+        YYY-MM-DD formatted ending instance, inclusive of the day, used if you want to trim longer datasets to the interval you want
     
     Returns:
     --------
@@ -331,6 +319,18 @@ def load(craft, data, files):
         
         # Make sure everything in concatenated
         raw_time = np.concatenate(all_time)
+
+        # Now, some data sources I shall not name (*OMNI*) do their data in
+        if start is not None and end is not None:
+            # Find out the time 
+            timerange = cdflib.cdfepoch.to_datetime(raw_time)
+
+            #Set up an index list of every time instance that falls within your start and end time
+            keep = (timerange >= np.datetime64(start)) & (timerange < np.datetime64(end) + np.timedelta64(1, 'D'))
+
+            #Restrict the time and value arrays to this index list
+            raw_time = raw_time[keep]
+            values = values[keep]
         
         # Convert epoch to elapsed hours using the registry metadata
         t_hours = epoch_to_hours(raw_time, info['epoch_type'])
