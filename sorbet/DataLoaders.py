@@ -302,7 +302,10 @@ def load(craft, data, files,start = None,end=None):
     
     #Now, for each variable 
     for name in data:
+        #Unpack spacecraft's info from FReESR
         info = REGISTRY[craft][name]
+
+        #Initialise the data arrays
         all_data = []
         all_time = []
         
