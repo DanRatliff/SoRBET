@@ -322,6 +322,7 @@ def load(craft, data, files,start = None,end=None):
         
         # Make sure everything in concatenated
         raw_time = np.concatenate(all_time)
+        dataset = np.concatenate(all_data)      # <- missing
 
         # Now, some data sources I shall not name (*OMNI*) do their data in
         if start is not None and end is not None:
@@ -333,7 +334,7 @@ def load(craft, data, files,start = None,end=None):
 
             #Restrict the time and value arrays to this index list
             raw_time = raw_time[keep]
-            values = values[keep]
+            dataset = dataset[keep]
         
         # Convert epoch to elapsed hours using the registry metadata
         t_hours = epoch_to_hours(raw_time, info['epoch_type'])
@@ -341,7 +342,7 @@ def load(craft, data, files,start = None,end=None):
         # Structure results into dictionary based on variable requested
         result[name] = {
             'time': t_hours,
-            'data': np.concatenate(all_data),
+            'data': dataset,
             'raw_epoch': raw_time
         }
     
