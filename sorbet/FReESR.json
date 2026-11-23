@@ -529,12 +529,13 @@
             "orbit": "N/A - propagated to Earth bow shock nose from L1 spacecraft",
             "operating": "1963-01-01 to present",
             "archive": "cdaweb",
-            "archive_note": "OMNI high-res files are daily. OMNI hourly files (for Dst, Kp) are yearly — the filename_pattern uses {year}0101 as a convention; the loader should download once per year, not per day."
+            "archive_note": "OMNI 1-min (hro2_1min) files are monthly, from 1995. OMNI hourly files (Dst, Kp) are half-yearly (0101 = Jan-Jun, 0701 = Jul-Dec), from 1963. The loader downloads once per file, not per day, and trims to the requested window."
         },
         "magnetic field": {
             "dataset": "OMNI_HRO2_1MIN",
             "url_base": "https://spdf.gsfc.nasa.gov/pub/data/omni/omni_cdaweb/hro2_1min/{year}/",
-            "filename_pattern": "omni_hro2_1min_{date}",
+            "filename_pattern": "omni_hro2_1min_{year}{month}01",
+            "cadence": "monthly",
             "variables": {
                 "data": "F",
                 "time": "Epoch",
@@ -547,7 +548,8 @@
         "solar wind speed": {
             "dataset": "OMNI_HRO2_1MIN",
             "url_base": "https://spdf.gsfc.nasa.gov/pub/data/omni/omni_cdaweb/hro2_1min/{year}/",
-            "filename_pattern": "omni_hro2_1min_{date}",
+            "filename_pattern": "omni_hro2_1min_{year}{month}01",
+            "cadence": "monthly",
             "variables": {
                 "data": "flow_speed",
                 "time": "Epoch"
@@ -559,7 +561,8 @@
         "solar wind density": {
             "dataset": "OMNI_HRO2_1MIN",
             "url_base": "https://spdf.gsfc.nasa.gov/pub/data/omni/omni_cdaweb/hro2_1min/{year}/",
-            "filename_pattern": "omni_hro2_1min_{date}",
+            "filename_pattern": "omni_hro2_1min_{year}{month}01",
+            "cadence": "monthly",
             "variables": {
                 "data": "proton_density",
                 "time": "Epoch"
@@ -571,8 +574,8 @@
         "dst": {
             "dataset": "OMNI2_H0_MRG1HR",
             "url_base": "https://spdf.gsfc.nasa.gov/pub/data/omni/omni_cdaweb/hourly/{year}/",
-            "filename_pattern": "omni2_h0_mrg1hr_{year}0101",
-            "cadence": "yearly",
+            "filename_pattern": "omni2_h0_mrg1hr_{year}{half}01",
+            "cadence": "bi-yearly",
             "variables": {
                 "data": "DST1800",
                 "time": "Epoch"
@@ -584,7 +587,8 @@
         "sym-h": {
             "dataset": "OMNI_HRO2_1MIN",
             "url_base": "https://spdf.gsfc.nasa.gov/pub/data/omni/omni_cdaweb/hro2_1min/{year}/",
-            "filename_pattern": "omni_hro2_1min_{date}",
+            "filename_pattern": "omni_hro2_1min_{year}{month}01",
+            "cadence": "monthly",
             "variables": {
                 "data": "SYM_H",
                 "time": "Epoch"
@@ -596,8 +600,8 @@
         "kp": {
             "dataset": "OMNI2_H0_MRG1HR",
             "url_base": "https://spdf.gsfc.nasa.gov/pub/data/omni/omni_cdaweb/hourly/{year}/",
-            "filename_pattern": "omni2_h0_mrg1hr_{year}0101",
-            "cadence": "yearly",
+            "filename_pattern": "omni2_h0_mrg1hr_{year}{half}01",
+            "cadence": "bi-yearly",
             "variables": {
                 "data": "KP1800",
                 "time": "Epoch"

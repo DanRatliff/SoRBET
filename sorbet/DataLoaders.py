@@ -118,11 +118,15 @@ def _resolve_url(entry, date_str, year, month):
     --------
     tuple of (base_url, filename_pattern) with placeholders filled in
     """
-    # Update the base URL of where the file is located online, based on requested year month and date
-    base = entry['url_base'].format(year=year, month=month, date=date_str)
+    #Now, because OMNI is a pain in the ass and does HALF YEARLY files I have to do some grunt work and catch that
+    #Ergo, we check for half-years too. Thanks OMNI team.
+    half = '01' if int(month) <= 6 else '07'
+    
+    # Update the base URL of where the file is located online, based on requested year month and date (and now, half year)
+    base = entry['url_base'].format(year=year, month=month, date=date_str, half=half)
 
-    # Update the filename pattern based on requested year month and date
-    pattern = entry['filename_pattern'].format(year=year, month=month, date=date_str)
+    # Update the filename pattern based on requested year month and date (...and half year)
+    pattern = entry['filename_pattern'].format(year=year, month=month, date=date_str, half=half)
 
     return base, pattern
 
